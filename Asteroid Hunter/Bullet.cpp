@@ -1,0 +1,56 @@
+#include "Bullet.h"
+
+
+
+Bullet::Bullet(float x, float y, Vector2 dir) :dir(0,0)
+{
+	this->x = x;
+	this->y = y;
+	this->dir = dir;
+	speed = 15.0f;
+}
+
+
+Bullet::~Bullet()
+{
+}
+
+void Bullet::Render() {
+	glPushMatrix();
+	glPointSize(5);
+	glColor3fv(Colors::White);
+	glBegin(GL_POINTS);
+	glVertex3f(this->x, this->y, 0);
+	glEnd();
+	glPopMatrix();
+}
+
+void Bullet::OffScreenControl(){
+	if (x > windowWidth || x < 0 || y < 0 || y > windowHeight)
+	{
+		//delete this;
+	}
+}
+
+bool Bullet::isOffscreen() {
+	if (x > windowWidth || x < 0 || y < 0 || y > windowHeight) {
+		//del = true;
+		return true;
+	}
+	return false;
+	//return (x > windowWidth || x < 0 || y < 0 || y > windowHeight);
+}
+
+void Bullet::Move() {
+	this->x += dir.x * speed;
+	this->y += dir.y * speed;
+ }
+
+void Bullet::Update() {
+	Move();
+	OffScreenControl();
+	/*if (del)
+	{
+		delete this;
+	}*/
+}
