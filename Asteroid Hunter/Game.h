@@ -7,6 +7,12 @@
 
 class Game
 {
+	float screenShakeScaleX = 1.0f;
+	float screenShakeScalyY = 1.0f;
+	float screenShakeTimer = 0.0f;
+	float screenShakeMulti = 1.0f;
+	bool isScreenShaking = false;
+
 public:
 	Player player;
 	
@@ -28,5 +34,7 @@ public:
 	void SpawnParticles(float x, float y, float size);
 	void CheckForWin();
 	void GameWon();
+	void ScreenShakeTrigger(float multi);
+	void ScreenShake();
 };
 

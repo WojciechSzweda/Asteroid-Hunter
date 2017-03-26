@@ -17,4 +17,5 @@ namespace Sound
 	extern LPSTR Explosion;
 	extern LPSTR PlayerDead;
 	extern LPSTR Swoosh;
+
 }

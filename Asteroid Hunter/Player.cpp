@@ -225,6 +225,7 @@ void Player::Move(float speed)
 	this->x += dir.x * speed;
 	this->y += dir.y * speed;
 
+	if(accDir > 0)
 	AddEngineEffects();
 
 }

@@ -23,5 +23,6 @@ namespace SoundManager
 	void PlayGunShotSound() {
 		PlaySound(TEXT(LaserShot), NULL, SND_ASYNC);
 	}
+
 }
 

@@ -5,6 +5,7 @@ int asteroidsDensity = 10;
 int environmentDensity = 30;
 Game::Game() : player(0, 0, 20)
 {
+	
 }
 
 
@@ -32,11 +33,14 @@ void Game::Setup() {
 }
 
 void Game::Render() {
+	glPushMatrix();
+	glTranslatef(screenShakeScaleX, screenShakeScalyY, 0);
 	player.Render();
 	for (auto & env : environment) env.Render();
 	for (auto & asteroid : asteroids) asteroid.Render();
 	for (auto & particle : particles) particle.Render();
 	Scoreboard::Render();
+	glPopMatrix();
 }
 
 void Game::Update() {
@@ -49,10 +53,32 @@ void Game::Update() {
 	ManageAsteroids();
 	ManageParticles();
 	CheckForWin();
+	ScreenShake();
+	
+}
+
+void Game::ScreenShake() {
+	if (isScreenShaking)
+	{
+		screenShakeScaleX = screenShakeMulti * sin(screenShakeTimer);
+		screenShakeScalyY = screenShakeMulti * cos(screenShakeTimer);
+		screenShakeTimer += 1.0f;
+		//std::cout << screenShakeTimer << " " << screenShakeScaleX << std::endl;
+		if (screenShakeTimer >= 20.0f)
+		{
+			isScreenShaking = false;
+			screenShakeTimer = 0.0f;
+		}
+	}
 }
 
 void Game::KeyDown(int key) {
 
+}
+
+void Game::ScreenShakeTrigger(float multi) {
+	isScreenShaking = true;
+	screenShakeMulti = multi / 10;
 }
 
 void Game::PlayerCollision() {
@@ -82,6 +108,7 @@ void Game::BulletCollision() {
 			if (dis <= asteroid.r) {
 				asteroid.AsteroidHit();
 				bullet.hit = true;
+				ScreenShakeTrigger(asteroid.r);
 			}
 		}
 	}
@@ -156,5 +183,5 @@ void Game::CheckForWin() {
 }
 
 void Game::GameWon() {
-
+	std::cout << "YOU WIN" << std::endl;
 }
