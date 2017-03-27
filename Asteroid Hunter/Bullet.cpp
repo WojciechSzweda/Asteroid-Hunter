@@ -28,17 +28,8 @@ void Bullet::Render() {
 void Bullet::OffScreenControl(){
 	if (x > windowWidth || x < 0 || y < 0 || y > windowHeight)
 	{
-		//delete this;
+		isOffscreen = true;
 	}
-}
-
-bool Bullet::isOffscreen() {
-	if (x > windowWidth || x < 0 || y < 0 || y > windowHeight) {
-		//del = true;
-		return true;
-	}
-	return false;
-	//return (x > windowWidth || x < 0 || y < 0 || y > windowHeight);
 }
 
 void Bullet::Move() {
@@ -49,8 +40,5 @@ void Bullet::Move() {
 void Bullet::Update() {
 	Move();
 	OffScreenControl();
-	/*if (del)
-	{
-		delete this;
-	}*/
+	
 }

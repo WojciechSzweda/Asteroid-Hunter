@@ -4,10 +4,8 @@
 
 Environment::Environment()
 {
-	//this->moveSpeed = (float)rand() / RAND_MAX * 1.5;
 	this->size = rand() % 2 + 0.5;
 	this->moveSpeed = size;
-	//this->size = (float)rand() / RAND_MAX * 2 + 1;
 	SpawnPosition();
 	SetVelocity();
 }
@@ -74,6 +72,11 @@ void Environment::StayInWindow() {
 	}
 }
 
+void Environment::OffScreenControl()
+{
+	StayInWindow();
+}
+
 void Environment::Decay() {
 	this->size *= decayScale;
 }
@@ -85,7 +88,7 @@ void Environment::DestroyStatus() {
 
 void Environment::Update() {
 	Move();
-	StayInWindow();
+	OffScreenControl();
 	DestroyStatus();
 
 	if (isParticle)

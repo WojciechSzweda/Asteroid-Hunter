@@ -12,20 +12,11 @@ class Game
 	float screenShakeTimer = 0.0f;
 	float screenShakeMulti = 1.0f;
 	bool isScreenShaking = false;
-
-public:
-	Player player;
 	
 	std::vector<Asteroid> asteroids;
 	std::vector<Environment> environment;
 	std::vector<Environment> particles;
 
-	Game();
-	~Game();
-	void Setup();
-	void Render();
-	void Update();
-	Asteroid NewAsteroid();
 	void KeyDown(int key);
 	void PlayerCollision();
 	void BulletCollision();
@@ -36,5 +27,17 @@ public:
 	void GameWon();
 	void ScreenShakeTrigger(float multi);
 	void ScreenShake();
+	Asteroid NewAsteroid();
+public:
+	Player player;
+
+	Game();
+	~Game();
+	void Setup();
+	void Render();
+	void Update();
+
+
+
 };
 

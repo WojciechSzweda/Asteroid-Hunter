@@ -127,23 +127,6 @@ void Game::ManageParticles() {
 }
 
 void Game::ManageAsteroids() {
-	//for (std::vector<Asteroid>::iterator it = asteroids.begin(); it != asteroids.end(); ) {
-	//	if (it->destroyed)
-	//	{
-	//		it = asteroids.erase(it);
-	//	}
-	//	else if (it->broken)
-	//	{
-	//		/*asteroids.emplace_back(Asteroid(it->x, it->y, (it->r - asteroidScalar)));
-	//		asteroids.emplace_back(Asteroid(it->x, it->y, (it->r - asteroidScalar)));*/
-	//		it = asteroids.erase(it);
-	//		return;
-	//	}
-	//	else
-	//	{
-	//		++it;
-	//	}
-	//}
 
 
 	for (std::vector<Asteroid>::size_type n = 0; n < asteroids.size();)

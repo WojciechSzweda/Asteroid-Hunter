@@ -2,37 +2,40 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Asteroid.cpp">
-      <Filter>cpp</Filter>
+      <Filter>Source FIles</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>cpp</Filter>
+      <Filter>Source FIles</Filter>
     </ClCompile>
     <ClCompile Include="Environment.cpp">
-      <Filter>cpp</Filter>
+      <Filter>Source FIles</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>cpp</Filter>
+      <Filter>Source FIles</Filter>
     </ClCompile>
     <ClCompile Include="Source.cpp">
-      <Filter>cpp</Filter>
+      <Filter>Source FIles</Filter>
     </ClCompile>
     <ClCompile Include="Vector2.cpp">
-      <Filter>cpp</Filter>
+      <Filter>Source FIles</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>cpp</Filter>
+      <Filter>Source FIles</Filter>
     </ClCompile>
     <ClCompile Include="Colors.cpp">
-      <Filter>cpp</Filter>
+      <Filter>Source FIles</Filter>
     </ClCompile>
     <ClCompile Include="Scoreboard.cpp">
-      <Filter>cpp</Filter>
+      <Filter>Source FIles</Filter>
     </ClCompile>
     <ClCompile Include="EngineEffect.cpp">
-      <Filter>cpp</Filter>
+      <Filter>Source FIles</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
-      <Filter>cpp</Filter>
+      <Filter>Source FIles</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureLoader.cpp">
+      <Filter>Source FIles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +75,12 @@
     <ClInclude Include="SoundManager.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="TextureLoader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="IMovable.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -79,12 +88,21 @@
   <ItemGroup>
     <Filter Include="Headers">
       <UniqueIdentifier>{13f0aa77-93bd-46ef-ac30-0770f7cdce47}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cpp">
-      <UniqueIdentifier>{398f53be-ab85-487c-ab9a-b92d923c2034}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Audio">
       <UniqueIdentifier>{7747a21f-b5d9-49fd-96d8-e50ac899e0ec}</UniqueIdentifier>
+      <Extensions>wav; midi; mp3</Extensions>
+    </Filter>
+    <Filter Include="Textures">
+      <UniqueIdentifier>{6ea098b9-1b38-4e92-a2e7-4c009272922b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source FIles">
+      <UniqueIdentifier>{398f53be-ab85-487c-ab9a-b92d923c2034}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{4d7a52ad-7521-442c-a269-d93c45cc0260}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -100,5 +118,13 @@
     <Media Include="Audio\swoosh.wav">
       <Filter>Audio</Filter>
     </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Textures\asteroid.tga">
+      <Filter>Textures</Filter>
+    </Image>
+    <Image Include="Textures\asteroid_small.tga">
+      <Filter>Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

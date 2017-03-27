@@ -3,15 +3,6 @@
 std::string Scoreboard::scoreText = "Score: ";
 int Scoreboard::Score = 0;
 
-Scoreboard::Scoreboard()
-{
-}
-
-
-Scoreboard::~Scoreboard()
-{
-}
-
 
 void Scoreboard::AddScore(int value) {
 	Scoreboard::Score += value;

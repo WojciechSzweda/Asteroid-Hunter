@@ -2,7 +2,7 @@
 #include "GlobalVariables.h"
 #include "Vector2.h"
 #include "Lib.h"
-class Environment
+class Environment : public IMovable
 {
 private:
 	Vector2 dir;
@@ -12,6 +12,7 @@ private:
 	float decayScale;
 	void SpawnPosition();
 	void StayInWindow();
+	void OffScreenControl();
 	void Move();
 	void Decay();
 	void DestroyStatus();

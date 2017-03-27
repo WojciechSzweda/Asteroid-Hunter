@@ -6,8 +6,6 @@
 class Scoreboard
 {
 public:
-	Scoreboard();
-	~Scoreboard();
 	static std::string scoreText;
 	static int Score;
 

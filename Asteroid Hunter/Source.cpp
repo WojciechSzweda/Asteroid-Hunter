@@ -4,24 +4,18 @@
 #include "Asteroid.h"
 #include "Game.h"
 
-//edit properties?
+
 #pragma comment(lib, "winmm.lib")
 
-//using namespace std;
-std::vector<Asteroid> asteroids;
 bool play = false;
-Player player = Player::Player(0,0, 20);
-//Asteroid asteroid = Asteroid::Asteroid(20);
 Game game;
-// Ustalenie stanu rendrowania  
-void SetupRC(void) {
+
+void Setup() {
 	game.Setup();
 }
 
-// Funkcja wywo³ywana w celu narysowania sceny
-void RenderScene(void) {
+void RenderScene() {
 	glClear(GL_COLOR_BUFFER_BIT);
-
 
 	game.Render();
 
@@ -30,32 +24,16 @@ void RenderScene(void) {
 
 
 
-void ChangeSize(GLsizei w, GLsizei h) {
-	// Zabezpieczenie przed dzieleniem przez zero
-	if (h == 0)
-		h = 1;
+void ChangeSize(GLsizei width, GLsizei height) {
+	if (height == 0)
+		height = 1;
 
-	// Ustalenie wielkoœci widoku zgodnego z rozmiarami okna
-	glViewport(0, 0, w, h);
+	glViewport(0, 0, width, height);
 
-	// Ustalenie uk³adu wspó³rzêdnych
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	// Keep the square square, this time, save calculated
-	// width and height for later use
-	/*if (w <= h)
-	{
-		windowHeight = 250.0f*h / w;
-		windowWidth = 250.0f;
-	}
-	else
-	{
-		windowWidth = 250.0f*w / h;
-		windowHeight = 250.0f;
-	}*/
-
-	// Ustanowienie przestrzeni ograniczaj¹cej (lewo, prawo, dó³, góra, blisko, daleko)
+	
 	glOrtho(0.0f, windowWidth, 0.0f, windowHeight, 1.0f, -1.0f);
 
 	glMatrixMode(GL_MODELVIEW);
@@ -97,27 +75,24 @@ void Input(unsigned char key, int x, int y) {
 
 }
 
-// G³ówny punki wejœcia programu  
 void main(int argc, char* argv[]) {
 	
-
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(windowWidth, windowHeight);
 	glutCreateWindow("Asteroid Hunter");
 	glutDisplayFunc(RenderScene);
-	//glutSpecialFunc(Input);
+	glutReshapeFunc(ChangeSize);
+
+
 	glutIgnoreKeyRepeat(true);
 	glutKeyboardFunc(Input);
 	glutSpecialFunc(KeyDown);
 	glutSpecialUpFunc(KeyUp);
-	//glutIgnoreKeyRepeat(false);
 
-	//glutKeyboardUpFunc(KeyUp);
-	glutReshapeFunc(ChangeSize);
 	glutTimerFunc(16, TimerFunction, 1);
-	SetupRC();
+	Setup();
 	glutMainLoop();
 }
 

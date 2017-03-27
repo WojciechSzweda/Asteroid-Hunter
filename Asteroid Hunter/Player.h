@@ -3,7 +3,7 @@
 #include "Vector2.h"
 #include "Bullet.h"
 #include "EngineEffect.h"
-class Player
+class Player : public IMovable
 {
 private:
 	float turnDir = 0;
@@ -17,9 +17,12 @@ private:
 	Vector2 engineEffectsSpawnPos[2];
 	void CalculateDirection();
 	void Break();
+	void OffScreenControl();
 	void StayInWindow();
 	void EnginePosition();
 	void RenderEngines();
+	void SetEngineEffectSpawnPoints(float modelView[16]);
+	void SetVerticesArray(float modelView[16]);
 	void AddEngineEffects();
 	void ManageEngineEffects();
 public:
@@ -47,7 +50,7 @@ public:
 	void InputDOWN(int key);
 	void InputUP(int key);
 	void Input(unsigned char key);
-	void Move(float speed);
+	void Move();
 	void Turn(float angle);
 	void SetPosition(float x, float y);
 	void Shoot();

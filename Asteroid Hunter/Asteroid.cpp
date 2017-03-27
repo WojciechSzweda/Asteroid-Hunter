@@ -15,7 +15,6 @@ Asteroid::Asteroid(float radius) : dir(0, 0)
 	SpawnPosition();
 	SetVelocity();
 
-
 	Texturing();
 }
 
@@ -30,20 +29,19 @@ Asteroid::Asteroid(float x, float y, float radius) : dir(0, 0)
 	offsets = new float[vertices];
 	FillOffsets();
 	SetVelocity(2);
+
+	Texturing();
 }
 
 
 Asteroid::~Asteroid()
 {
-	//std::cout << "wtf?" << std::endl;
-	//delete[] this->offsets;
 }
 
 void Asteroid::FillOffsets() {
 	for (int i = 0; i < vertices; i++)
 	{
 		offsets[i] = 2 *(((float)rand() / RAND_MAX) * r /6) - r/6;
-		//offsets.emplace_back(((float)rand() / RAND_MAX) * 5);
 	}
 }
 
@@ -60,6 +58,11 @@ void Asteroid::SetVelocity(float multi) {
 	this->dir.y = multi * 2 * (float)rand() / RAND_MAX -1;
 }
 
+void Asteroid::OffScreenControl()
+{
+	StayInWindow();
+}
+
 void Asteroid::Render() {
 	glPushMatrix();
 
@@ -69,24 +72,38 @@ void Asteroid::Render() {
 	glRotatef(Rot, 0.0f, 0.0f, 1.0f);
 	glTranslatef(-x, -y, 0);
 
-	glColor3f(1.0f, 1.0f, 1.0f);
+	glColor3fv(Colors::White);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glBegin(GL_POLYGON);
-	
-	GLdouble degree = 2 * M_PI / vertices;
+
+	GLdouble degree = 2 * M_PI / vertices;;
 	for (int i = 0; i < vertices; i++)
 	{
-		//glTexCoord2f(i, i);
 		glVertex2f(x + (r + offsets[i])*cos(i*degree), y + (r + offsets[i])*sin(i*degree));
+		glTexCoord2f(((r + offsets[i])*cos(i*degree))/(r+offsets[i]),((r + offsets[i])*sin(i*degree)) /(r + offsets[i]));
 	}
 	glEnd();
 
 	glDisable(GL_TEXTURE_2D);
 
+	DrawOutline(degree);
+
 	glPopMatrix();
 }
+
+void Asteroid::DrawOutline(float degree)
+{
+	glBegin(GL_LINE_LOOP);
+
+	for (int i = 0; i < vertices; i++)
+	{
+		//glVertex2f(x + (r + offsets[i])*cos(i*degree), y + (r + offsets[i])*sin(i*degree));
+	}
+
+	glEnd();
+}
+
 
 void Asteroid::Move() {
 	this->x += dir.x * moveSpeed;
@@ -114,7 +131,7 @@ void Asteroid::StayInWindow() {
 
 void Asteroid::Update() {
 	Move();
-	StayInWindow();
+	OffScreenControl();
 }
 
 void Asteroid::AsteroidHit() {
@@ -135,25 +152,28 @@ void Asteroid::DeleteArrays() {
 }
 
 void Asteroid::Texturing() {
+	GLsizei width, height;
+	GLenum format, type;
+	GLvoid *pixels;
 
-	// £adowanie tekstury
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-	// Generate a name for the texture
-	glGenTextures(1, &texture);
+	//TODO: texture namespace or texture loader
 
-	glBindTexture(GL_TEXTURE_2D, texture);
+	const char* path = "Textures\\asteroid_small.tga";
+	GLboolean error = TextureLoader::LoadTexture(path, width, height, type, format, pixels);
 
-
-	for (y1 = 0; y1 < 256; y1++)
+	if (error == GL_FALSE)
 	{
-		for (x1 = 0; x1 < 256; x1++)
-			pixels[y1 * 256 + x1] = rand() % 256;
+		printf("Nieodnaleziono %s", path);
+		//TODO: error handler
 	}
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, 256, 256, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, pixels);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	//glEnable(GL_TEXTURE_2D);
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, type, pixels);
+	delete[](unsigned char*)pixels;
+
 }
+

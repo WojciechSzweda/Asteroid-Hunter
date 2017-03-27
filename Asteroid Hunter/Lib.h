@@ -9,9 +9,12 @@
 #include <ctime>
 #include <vector>
 #include "Colors.h"
-
+#include "IMovable.h"
 #include "SoundManager.h"
-
+#include "TextureLoader.h"
 
 #include <iostream>
+
+
+#define GL_GENERATE_MIPMAP		0x8191
 

@@ -2,7 +2,7 @@
 #include "Vector2.h"
 #include "GlobalVariables.h"
 #include "Lib.h"
-class Bullet
+class Bullet : public IMovable
 {
 public:
 	float x;
@@ -14,7 +14,7 @@ public:
 	void Move();
 	void Update();
 	void OffScreenControl();
-	bool isOffscreen();
+	bool isOffscreen = false;
 	void Render();
 
 	bool hit = false;

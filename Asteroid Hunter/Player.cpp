@@ -10,8 +10,6 @@ Player::Player(float x, float y, float r) : dir(0, 0)
 	this->r = r;
 	this->turningSpeed = 5.0f;
 	this->moveSpeed = 7.0f;
-	//this->color = new float[3]{1.0f, 1.0f, 1.0f};
-
 }
 
 
@@ -38,15 +36,10 @@ void Player::Render() {
 	glTranslatef(-x, -y, 0);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	//glColor3fv(Player::color);
 	glColor3fv(Colors::White);
 
 	float modelView[16];
 	glGetFloatv(GL_MODELVIEW_MATRIX, modelView);
-	
-
-
-
 
 	glBegin(GL_TRIANGLES);
 	GLdouble degree = 2 * M_PI / 3;
@@ -66,48 +59,8 @@ void Player::Render() {
 	glPopMatrix();
 
 
-
-	float pointX = 0, pointY = 0, pointZ = 0, pointW = 0;
-	for (int i = 0; i < 3; i++)
-	{
-
-	pointX = (vertices[i].x * modelView[0]) + (vertices[i].y * modelView[4]) + (modelView[12]);
-	pointY = (vertices[i].x * modelView[1]) + (vertices[i].y * modelView[5]) + (modelView[13]);
-	pointW = (vertices[i].x * modelView[3]) + (vertices[i].y * modelView[7]) + (modelView[15]);
-
-	pointX /= pointW;
-	pointY /= pointW;
-
-	vertices[i].x = pointX;
-	vertices[i].y = pointY;
-
-
-	/*glPointSize(5);
-	glBegin(GL_POINTS);
-	glColor3fv(Colors::White);
-
-	glVertex2f(pointX, pointY);
-
-	glEnd();*/
-	}
-
-	for (int i = 0; i < 2; i++)
-	{
-		pointX = (enginesPos[i].x * modelView[0]) + (enginesPos[i].y * modelView[4]) + modelView[12];
-		pointY = (enginesPos[i].x * modelView[1]) + (enginesPos[i].y * modelView[5]) + modelView[13];
-		pointW = (enginesPos[i].x * modelView[3]) + (enginesPos[i].y * modelView[7]) + modelView[15];
-
-		pointX /= pointW;
-		pointY /= pointW;
-
-		engineEffectsSpawnPos[i].x = pointX;
-		engineEffectsSpawnPos[i].y = pointY;
-	}
-
-
-
-
-
+	SetVerticesArray(modelView);
+	SetEngineEffectSpawnPoints(modelView);
 
 	for (auto & effect : engineEffects) effect.Render();
 	for (auto & bullet : bullets) bullet.Render();
@@ -123,6 +76,44 @@ void Player::RenderEngines() {
 	glVertex2f(enginesPos[1].x, enginesPos[1].y);
 
 	glEnd();
+}
+
+void Player::SetEngineEffectSpawnPoints(float modelView[16])
+{
+	float pointX = 0, pointY = 0, pointZ = 0, pointW = 0;
+
+	for (int i = 0; i < 2; i++)
+	{
+		pointX = (enginesPos[i].x * modelView[0]) + (enginesPos[i].y * modelView[4]) + modelView[12];
+		pointY = (enginesPos[i].x * modelView[1]) + (enginesPos[i].y * modelView[5]) + modelView[13];
+		pointW = (enginesPos[i].x * modelView[3]) + (enginesPos[i].y * modelView[7]) + modelView[15];
+
+		pointX /= pointW;
+		pointY /= pointW;
+
+		engineEffectsSpawnPos[i].x = pointX;
+		engineEffectsSpawnPos[i].y = pointY;
+	}
+}
+
+void Player::SetVerticesArray(float modelView[16])
+{
+	float pointX = 0, pointY = 0, pointZ = 0, pointW = 0;
+
+	for (int i = 0; i < 3; i++)
+	{
+
+		pointX = (vertices[i].x * modelView[0]) + (vertices[i].y * modelView[4]) + (modelView[12]);
+		pointY = (vertices[i].x * modelView[1]) + (vertices[i].y * modelView[5]) + (modelView[13]);
+		pointW = (vertices[i].x * modelView[3]) + (vertices[i].y * modelView[7]) + (modelView[15]);
+
+		pointX /= pointW;
+		pointY /= pointW;
+
+		vertices[i].x = pointX;
+		vertices[i].y = pointY;
+
+	}
 }
 
 void Player::EnginePosition() {
@@ -185,7 +176,6 @@ void Player::InputDOWN(int key) {
 
 void Player::InputUP(int key) {
 	if (key == GLUT_KEY_LEFT || key == GLUT_KEY_RIGHT) {
-		//turnDir = 0;
 		if (turnBreakControl < 2)
 		{
 			turnBreak = true;
@@ -193,7 +183,6 @@ void Player::InputUP(int key) {
 		turnBreakControl--;
 	}
 	else if (key == GLUT_KEY_DOWN || key == GLUT_KEY_UP) {
-		//accDir = 0;
 		if (accBreakControl < 2)
 		{
 			accBreak = true;
@@ -219,11 +208,11 @@ void Player::AddEngineEffects() {
 	}
 }
 
-void Player::Move(float speed)
+void Player::Move()
 {
 	CalculateDirection();
-	this->x += dir.x * speed;
-	this->y += dir.y * speed;
+	this->x += dir.x * moveSpeed * accDir;
+	this->y += dir.y * moveSpeed * accDir;
 
 	if(accDir > 0)
 	AddEngineEffects();
@@ -246,11 +235,16 @@ void Player::Break() {
 	}
 }
 
+void Player::OffScreenControl()
+{
+	StayInWindow();
+}
+
 void Player::Update() {
 	Turn(turningSpeed * turnDir);
 	Break();
-	Move(moveSpeed * accDir);
-	StayInWindow();
+	Move();
+	OffScreenControl();
 	for (auto & bullet : bullets) bullet.Update();
 	for (auto & effect : engineEffects) effect.Update();
 	ManageBullets();
@@ -262,7 +256,7 @@ void Player::Update() {
 
 void Player::ManageBullets() {
 	for (std::vector<Bullet>::iterator it = bullets.begin(); it != bullets.end(); ) {
-		if (it->isOffscreen())
+		if (it->isOffscreen)
 		{
 			it = bullets.erase(it);
 		}
