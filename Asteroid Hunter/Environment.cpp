@@ -1,25 +1,22 @@
 #include "Environment.h"
-#include <iostream>
 
 
 Environment::Environment()
 {
-	this->size = rand() % 2 + 0.5;
-	this->moveSpeed = size;
+	this->size = rand() % 2 + 0.5f;
+	Speed = size;
 	SpawnPosition();
-	SetVelocity();
+	SetRandomDirection();
 }
 
-Environment::Environment(float x, float y, float size, float decayScale)
+Environment::Environment(Vector2 position, float size, float decayScale)
 {
 	this->size = size;
-	this->moveSpeed = size;
-
-	this->x = x;
-	this->y = y;
+	Speed = size;
+	Position = position;
 	this->isParticle = true;
 	this->decayScale = decayScale;
-	SetVelocity();
+	SetRandomDirection();
 }
 
 
@@ -29,53 +26,21 @@ Environment::~Environment()
 
 
 void Environment::SpawnPosition() {
-	this->x = rand() % (int)windowWidth;
-	this->y = rand() % (int)windowHeight;
+	this->Position.x = fmod(rand(), windowWidth);
+	this->Position.y = fmod(rand(), windowHeight);
 }
 
-void Environment::SetVelocity() {
-	this->dir.x = 2 * (float)rand() / RAND_MAX - 1;
-	this->dir.y = 2 * (float)rand() / RAND_MAX - 1;
-}
 
 void Environment::Render() {
 	glPushMatrix();
 	glPointSize(this->size);
 	glColor3fv(Colors::White);
 	glBegin(GL_POINTS);
-	glVertex3f(this->x, this->y, 1);
+	glVertex3f(Position.x, Position.y, 1);
 	glEnd();
 	glPopMatrix();
 }
 
-void Environment::Move() {
-	this->x += dir.x * moveSpeed;
-	this->y += dir.y * moveSpeed;
-}
-
-void Environment::StayInWindow() {
-	if (x > windowWidth)
-	{
-		x = 0;
-	}
-	else if (x < 0)
-	{
-		x = windowWidth;
-	}
-	else if (y > windowHeight)
-	{
-		y = 0;
-	}
-	else if (y < 0)
-	{
-		y = windowHeight;
-	}
-}
-
-void Environment::OffScreenControl()
-{
-	StayInWindow();
-}
 
 void Environment::Decay() {
 	this->size *= decayScale;
@@ -87,8 +52,9 @@ void Environment::DestroyStatus() {
 }
 
 void Environment::Update() {
+	AccelerationHandler();
 	Move();
-	OffScreenControl();
+	OffScreenControl(true);
 	DestroyStatus();
 
 	if (isParticle)

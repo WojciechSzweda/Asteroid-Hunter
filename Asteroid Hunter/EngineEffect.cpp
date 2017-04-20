@@ -6,11 +6,10 @@ EngineEffect::EngineEffect()
 {
 }
 
-EngineEffect::EngineEffect(float x, float y) {
-	this->x = x;
-	this->y = y;
-	this->decayScale = 0.7f;
-	this->size = 5.0f;
+EngineEffect::EngineEffect(Vector2 position) {
+	Position = position;
+	DecayScale = 0.7f;
+	Radius = 5.0f;
 }
 
 
@@ -20,13 +19,10 @@ EngineEffect::~EngineEffect()
 
 void EngineEffect::Render() {
 	glPushMatrix();
-	/*glTranslatef(x, y, 0);
-	glRotatef(rot, 0.0f, 0.0f, 1.0f);
-	glTranslatef(-x, -y, 0);*/
-	glPointSize(size);
+	glPointSize(Radius);
 	glColor3fv(Colors::White);
 	glBegin(GL_POINTS);
-	glVertex3f(this->x, this->y, 0);
+	glVertex3f(Position.x, Position.y, 0);
 	glEnd();
 	glPopMatrix();
 }
@@ -37,11 +33,11 @@ void EngineEffect::Update() {
 }
 
 void EngineEffect::Decay() {
-	this->size *= decayScale;
+	this->Radius *= DecayScale;
 }
 
 
 void EngineEffect::DestroyedStatus() {
-	if (size < 0.5)
+	if (Radius < 0.5)
 		destroyed = true;
 }

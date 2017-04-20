@@ -1,30 +1,21 @@
 #pragma once
-#include "GlobalVariables.h"
-#include "Vector2.h"
-#include "Lib.h"
-class Environment : public IMovable
+#include "GameObject.h"
+
+class Environment : public GameObject
 {
 private:
-	Vector2 dir;
+	//Vector2 Direction;
 	float size;
-	float moveSpeed;
 	bool isParticle = false;
 	float decayScale;
 	void SpawnPosition();
-	void StayInWindow();
-	void OffScreenControl();
-	void Move();
 	void Decay();
 	void DestroyStatus();
 public:
-
-	float x;
-	float y;
 	bool destroyed = false;
 	Environment();
-	Environment(float x, float y, float size, float decayScale);
+	Environment(Vector2 position, float size, float decayScale);
 	~Environment();
-	void SetVelocity();
 	void Render();
 	void Update();
 };

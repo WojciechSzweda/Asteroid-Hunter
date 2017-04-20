@@ -34,8 +34,20 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>Source FIles</Filter>
     </ClCompile>
-    <ClCompile Include="TextureLoader.cpp">
+    <ClCompile Include="TextManager.cpp">
       <Filter>Source FIles</Filter>
+    </ClCompile>
+    <ClCompile Include="TGAloader.cpp">
+      <Filter>Source FIles</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipWreck.cpp">
+      <Filter>Source FIles</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source FIles</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Interfaces</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,10 +87,19 @@
     <ClInclude Include="SoundManager.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="TextureLoader.h">
+    <ClInclude Include="TextManager.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="IMovable.h">
+    <ClInclude Include="TGAloader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipWreck.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
@@ -124,6 +145,12 @@
       <Filter>Textures</Filter>
     </Image>
     <Image Include="Textures\asteroid_small.tga">
+      <Filter>Textures</Filter>
+    </Image>
+    <Image Include="Textures\ura0fss1.tga">
+      <Filter>Textures</Filter>
+    </Image>
+    <Image Include="Textures\ship.tga">
       <Filter>Textures</Filter>
     </Image>
   </ItemGroup>

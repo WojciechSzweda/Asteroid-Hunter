@@ -7,7 +7,6 @@
 
 #pragma comment(lib, "winmm.lib")
 
-bool play = false;
 Game game;
 
 void Setup() {
@@ -33,7 +32,7 @@ void ChangeSize(GLsizei width, GLsizei height) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	
+
 	glOrtho(0.0f, windowWidth, 0.0f, windowHeight, 1.0f, -1.0f);
 
 	glMatrixMode(GL_MODELVIEW);
@@ -42,10 +41,7 @@ void ChangeSize(GLsizei width, GLsizei height) {
 
 
 void TimerFunction(int value) {
-	if (play)
-	{
-		game.Update();
-	}
+	game.Update();
 
 	glutPostRedisplay();
 	glutTimerFunc(33, TimerFunction, 1);
@@ -63,20 +59,13 @@ void KeyUp(int key, int x, int y) {
 }
 
 void Input(unsigned char key, int x, int y) {
-	if (key == 13)
-	{
-		play = true;
-	}
-	else if (key == 27)
-	{
-		play = false;
-	}
+	
 	game.player.Input(key);
-
+	game.Input(key);
 }
 
 void main(int argc, char* argv[]) {
-	
+
 	srand((unsigned int)time(NULL));
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);

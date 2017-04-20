@@ -8,10 +8,12 @@
 #include "math.h"
 #include <ctime>
 #include <vector>
+#include "Vector2.h"
 #include "Colors.h"
-#include "IMovable.h"
+#include "Sprite.h"
 #include "SoundManager.h"
-#include "TextureLoader.h"
+#include "TextManager.h"
+#include "TGAloader.h"
 
 #include <iostream>
 

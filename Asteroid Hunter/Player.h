@@ -1,48 +1,52 @@
 #pragma once
-#include "Lib.h"
-#include "Vector2.h"
+//#include "Lib.h"
+//#include "Vector2.h"
 #include "Bullet.h"
 #include "EngineEffect.h"
-class Player : public IMovable
+#include "ShipWreck.h"
+
+class Player : public GameObject, public Sprite
 {
 private:
 	float turnDir = 0;
 	bool turnBreak = false;
-	float accDir = 0;
 	bool accBreak = false;
+	bool Accelerating = false;
 	int turnBreakControl = 0;
-	int accBreakControl = 0;
-
+	float SpeedLimit;
+	float Rot;
+	float turningSpeed;
+	bool Destroyed = false;
+	const static int ShipWrecksCount = 4;
 	Vector2 enginesPos[2];
 	Vector2 engineEffectsSpawnPos[2];
-	void CalculateDirection();
+	Vector2 CalculateDirection();
+
+	GLuint shipWreckTextures[ShipWrecksCount];
+
+	std::vector<ShipWreck> shipWrecks;
+
 	void Break();
-	void OffScreenControl();
-	void StayInWindow();
 	void EnginePosition();
 	void RenderEngines();
 	void SetEngineEffectSpawnPoints(float modelView[16]);
 	void SetVerticesArray(float modelView[16]);
 	void AddEngineEffects();
 	void ManageEngineEffects();
+	void Accelerate();
+	void ShipWrecking();
+	void AccelerationHandler();
+	void Turn(float angle);
+	void Shoot();
+	void ManageBullets();
 public:
-	//const float * color2 = new float[4]{ 0.0f, 1.0f, 0.0f, 0.0f };
-	float color2[3] = { 1.0f,1.0f,1.0f };
-	//GLfloat vertices[3][2];
 	Vector2 vertices[3];
-	float r;
-	float x;
-	float y;
-	float xRot;
-	float yRot;
-	int Rot;
-	float turningSpeed;
-	float moveSpeed;
-	Vector2 dir;
 	std::vector<Bullet> bullets;
 	std::vector<EngineEffect> engineEffects;
 
+
 	Player(float r, float x, float y);
+	Player();
 	~Player();
 
 	void Render();
@@ -50,11 +54,9 @@ public:
 	void InputDOWN(int key);
 	void InputUP(int key);
 	void Input(unsigned char key);
-	void Move();
-	void Turn(float angle);
 	void SetPosition(float x, float y);
-	void Shoot();
 	void PlayerHit();
-	void ManageBullets();
+	void SetShipWrecksTexture(GLuint textureBuffer[]);
+	void SetShipWrecksTexture(GLuint tex1, GLuint tex2, GLuint tex3, GLuint tex4);
 };
 

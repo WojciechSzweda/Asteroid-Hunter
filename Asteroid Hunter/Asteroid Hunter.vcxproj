@@ -92,6 +92,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -118,11 +119,15 @@
     <ClCompile Include="EngineEffect.cpp" />
     <ClCompile Include="Environment.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ShipWreck.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="TGAloader.cpp" />
+    <ClCompile Include="TextManager.cpp" />
     <ClCompile Include="Scoreboard.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="TextureLoader.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -136,12 +141,15 @@
     <ClInclude Include="Environment.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GlobalVariables.h" />
-    <ClInclude Include="IMovable.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Lib.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="ShipWreck.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="TGAloader.h" />
+    <ClInclude Include="TextManager.h" />
     <ClInclude Include="Scoreboard.h" />
     <ClInclude Include="SoundManager.h" />
-    <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +161,8 @@
   <ItemGroup>
     <Image Include="Textures\asteroid.tga" />
     <Image Include="Textures\asteroid_small.tga" />
+    <Image Include="Textures\ship.tga" />
+    <Image Include="Textures\ura0fss1.tga" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

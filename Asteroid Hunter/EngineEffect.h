@@ -1,23 +1,22 @@
 #pragma once
-#include "Lib.h"
-#include "Vector2.h"
-class EngineEffect
+#include "GameObject.h"
+
+class EngineEffect : public GameObject
 {
 private:
+	Vector2 Direction;
+	float DecayScale;
+
 	void DestroyedStatus();
+	void Decay();
 public:
-	float x;
-	float y;
-	float decayScale;
-	float size;
 	bool destroyed = false;
 
 	EngineEffect();
-	EngineEffect(float x, float y);
+	EngineEffect(Vector2 position);
 	~EngineEffect();
 
 	void Render();
 	void Update();
-	void Decay();
 };
 

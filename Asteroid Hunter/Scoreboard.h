@@ -9,6 +9,7 @@ public:
 	static std::string scoreText;
 	static int Score;
 
+	static void RenderPlayerScore(std::string playerName);
 	static void Render();
 	static void Update();
 	static void AddScore(int value);
